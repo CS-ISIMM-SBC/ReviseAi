@@ -1,158 +1,349 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+    --ink: #1d2340;
+    --muted: #69718c;
+    --accent: #6254d9;
+    --accent-dark: #4c40bd;
+    --line: #e7e9f2;
+    --surface: #ffffff;
+}
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: #333;
     min-height: 100vh;
+    color: var(--ink);
+    background:
+        radial-gradient(ellipse at 10% 0%, rgba(114, 100, 226, 0.12), transparent 35rem),
+        #f6f7fc;
+    font-family: 'DM Sans', sans-serif;
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.app-navbar {
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(29, 35, 64, 0.08);
+    backdrop-filter: blur(14px);
 }
 
-/* Cartes transparentes modernes */
+.app-navbar .navbar-brand {
+    color: var(--ink);
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: -0.04em;
+}
+
+.brand-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 12px;
+    background: #eeecff;
+    color: var(--accent);
+    font-size: 1.15rem;
+}
+
+.page-shell {
+    max-width: 860px;
+    padding-top: clamp(2.5rem, 7vw, 5rem);
+    padding-bottom: 4rem;
+}
+
+.hero {
+    max-width: 680px;
+    margin: 0 auto 2.25rem;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid #e4e0ff;
+    border-radius: 999px;
+    background: #f0eeff;
+    color: var(--accent-dark);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.hero h1 {
+    margin-bottom: 0.85rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 3.35rem);
+    font-weight: 800;
+    letter-spacing: -0.055em;
+}
+
+.hero p {
+    max-width: 570px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 1.08rem;
+    line-height: 1.7;
+}
+
 .card-moderne {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    margin-bottom: 25px;
-    
-    /* Animation au chargement */
-    animation: slideUp 0.6s ease-out forwards;
-    opacity: 0;
-    transform: translateY(30px);
+    padding: clamp(1.35rem, 5vw, 2.5rem);
+    border: 1px solid rgba(225, 227, 239, 0.9);
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: 0 18px 55px rgba(37, 43, 82, 0.08);
+    animation: slideUp 0.45s ease-out both;
+}
+
+.card-heading {
+    margin-bottom: 1.8rem;
+}
+
+.card-heading h2 {
+    margin: 0 0 0.4rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.card-heading p,
+.form-text {
+    color: var(--muted);
+}
+
+.card-heading p {
+    margin: 0;
+}
+
+.form-label {
+    margin-bottom: 0.6rem;
+    color: #333a59;
+    font-weight: 700;
+}
+
+.form-control,
+.form-select {
+    min-height: 50px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background-color: #fafbfe;
+    color: var(--ink);
+}
+
+textarea.form-control {
+    min-height: 150px;
+    padding: 0.9rem 1rem;
+    line-height: 1.65;
+    resize: vertical;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #a59df0;
+    background-color: #fff;
+    box-shadow: 0 0 0 0.22rem rgba(98, 84, 217, 0.13);
+}
+
+input[type="file"].form-control {
+    padding: 0.55rem 0.7rem;
+}
+
+input[type="file"]::file-selector-button {
+    margin-right: 0.8rem;
+    padding: 0.45rem 0.75rem;
+    border: 0;
+    border-radius: 8px;
+    background: #eeecff;
+    color: var(--accent-dark);
+    font-weight: 700;
+}
+
+.btn-custom {
+    border: 0;
+    border-radius: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.btn-custom:hover,
+.btn-custom:focus-visible {
+    transform: translateY(-1px);
+    background: var(--accent-dark);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(76, 64, 189, 0.2);
+}
+
+.btn-outline-custom {
+    border: 1px solid #dedbf8;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--accent-dark);
+    font-weight: 700;
+}
+
+.btn-outline-custom:hover,
+.btn-outline-custom:focus-visible {
+    border-color: #c9c4f4;
+    background: #f5f4ff;
+    color: var(--accent-dark);
+}
+
+.result-shell {
+    max-width: 960px;
+}
+
+.result-heading {
+    margin: 1.5rem 0 1.75rem;
+}
+
+.result-heading h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+}
+
+.result-heading p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.result-card h2 {
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line);
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.contenu-resume {
+    color: #373d59;
+    line-height: 1.8;
+}
+
+.contenu-resume h3 {
+    margin: 1.5rem 0 0.75rem;
+    color: var(--accent-dark);
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.contenu-resume ul {
+    padding-left: 1.25rem;
+}
+
+.question-block {
+    padding: 1.15rem;
+    border: 1px solid #eceef5;
+    border-radius: 15px;
+    background: #fbfbfe;
+}
+
+.question-block h5 {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+.option-quiz {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.6rem;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.option-quiz:hover {
+    border-color: #b6b0ef;
+    background: #f8f7ff;
+}
+
+.option-quiz input[type="radio"] {
+    flex: 0 0 auto;
+    margin-right: 0.75rem;
+    accent-color: var(--accent);
+}
+
+.option-quiz input:disabled {
+    cursor: default;
+}
+
+.reponse-correcte {
+    border-color: #75c69a !important;
+    background-color: #effaf3 !important;
+    color: #17613a !important;
+    font-weight: 700;
+}
+
+.reponse-incorrecte {
+    border-color: #e59a9a !important;
+    background-color: #fff2f1 !important;
+    color: #8a3030 !important;
+}
+
+#quiz-result {
+    padding: 1.25rem;
+    border-radius: 14px;
+    background: #f3f2ff;
+}
+
+.fade-in {
+    animation: slideUp 0.45s ease-out both;
 }
 
 @keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Style des options du quiz */
-.option-quiz {
-    background: #ffffff;
-    border: 2px solid #e9ecef;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-}
-
-.option-quiz:hover {
-    border-color: #23a6d5;
-    background: #f1f8fc;
-    transform: translateX(8px);
-}
-
-/* Mise en évidence de la bonne réponse (utile pour le PDF corrigé) */
-.reponse-correcte {
-    border-color: #28a745;
-    background-color: #eafaf1;
-    font-weight: 600;
-    color: #155724;
-}
-
-/* Boutons stylisés */
-.btn-custom {
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-custom:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    color: white;
-}
-
-/* Améliorations pour les options cliquables du quiz */
-.option-quiz {
-    cursor: pointer;
-}
-
-.option-quiz input[type="radio"] {
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
-/* Couleurs appliquées PAR LE JAVASCRIPT après la validation */
-.reponse-correcte {
-    border-color: #28a745 !important;
-    background-color: #eafaf1 !important;
-    color: #155724 !important;
-    font-weight: bold;
-}
-
-.reponse-incorrecte {
-    border-color: #dc3545 !important;
-    background-color: #f8d7da !important;
-    color: #721c24 !important;
-}
-
-/* Formater correctement les listes et titres générés par l'IA dans le résumé */
-.contenu-resume h3 {
-    color: #a777e3;
-    font-weight: 600;
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.contenu-resume ul {
-    margin-bottom: 1.5rem;
-}
-
-/* --- GESTION DES SAUTS DE PAGE POUR LE PDF --- */
-
-/* Empêcher de couper un bloc de question ou une option en deux */
-.question-block, .option-quiz {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-}
-
-/* Empêcher de couper les paragraphes, les listes ou les titres du résumé en deux */
-.contenu-resume p, 
-.contenu-resume ul, 
-.contenu-resume li, 
-.contenu-resume h2, 
+.question-block,
+.option-quiz,
+.contenu-resume p,
+.contenu-resume ul,
+.contenu-resume li,
+.contenu-resume h2,
 .contenu-resume h3 {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
 }
 
-/* S'assurer que le titre reste avec son paragraphe suivant */
-.contenu-resume h2, 
+.contenu-resume h2,
 .contenu-resume h3 {
     page-break-after: avoid !important;
     break-after: avoid !important;
 }
 
+@media (max-width: 575.98px) {
+    .page-shell {
+        padding-top: 2rem;
+    }
 
+    .hero {
+        margin-bottom: 1.6rem;
+    }
 
-/* --- AMÉLIORATION DU DESIGN POUR L'EXPORT PDF --- */
+    .question-block {
+        padding: 0.9rem;
+    }
+}
+
 @media print {
     body {
-        background-color: #ffffff !important;
+        background: #fff !important;
         color: #000;
-        font-family: 'Arial', sans-serif;
+        font-family: Arial, sans-serif;
     }
 
     #zone-a-exporter {
@@ -160,27 +351,20 @@ body {
         width: 100%;
     }
 
-    /* Organisation en cartes propres */
     .card-moderne {
         border: 1px solid #ddd !important;
-        padding: 20px;
-        margin-bottom: 25px;
-        border-radius: 0 !important; /* Pas de bords arrondis à l'impression */
+        border-radius: 0 !important;
         box-shadow: none !important;
     }
 
-    /* Titres structurés */
-    h2, h3 {
+    h2,
+    h3 {
         color: #2c3e50 !important;
-        border-bottom: 2px solid #3498db;
-        padding-bottom: 10px;
-        margin-top: 30px;
     }
 
-    /* Listes lisibles */
     ul {
-        list-style-type: square;
         padding-left: 20px;
+        list-style-type: square;
     }
 
     li {
@@ -188,21 +372,18 @@ body {
         line-height: 1.5;
     }
 
-    /* Quiz : Rendre les choix clairs */
     .question-block {
-        margin-bottom: 30px;
-        page-break-inside: avoid; /* Évite de couper une question en deux */
+        margin-bottom: 24px;
     }
 
     .option-quiz {
         display: block;
         padding: 8px;
         border: 1px solid #eee;
-        margin-bottom: 5px;
     }
 
-    /* Cacher les éléments inutiles à l'impression */
-    #bouton-valider-container, #btn-export {
+    #bouton-valider-container,
+    #btn-export {
         display: none !important;
     }
 }

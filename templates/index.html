@@ -3,78 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - LunaStudyAI</title>
-    <!-- Bootstrap CSS -->
+    <title>Accueil - ReviseAI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- CSS Personnalisé -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<!-- Barre de navigation optionnelle (si vous l'aviez dans base.html) -->
-<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+<nav class="navbar app-navbar">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="/">
-            ReviseAI
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/">
+            <span class="brand-icon"><i class="bi bi-stars"></i></span>
+            <span>Revise<span class="text-primary">AI</span></span>
         </a>
     </div>
 </nav>
 
-<div class="container my-5" style="max-width: 800px;">
-    <!-- En-tête -->
-    <div class="text-center mb-5 fade-in">
-        <h1 class="fw-bold text-white display-5 mb-3" style="text-shadow: 2px 2px 5px rgba(0,0,0,0.4);">✨ ReviseAI</h1>
-        <p class="text-white fs-5" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.4);">Transforme tes cours volumineux en résumés clairs ou en quiz interactifs d'un simple clic.</p>
-    </div>
+<main class="container page-shell">
+    <section class="hero text-center fade-in">
+        <span class="eyebrow"><i class="bi bi-stars"></i> Ton espace de révision intelligent</span>
+        <h1>Vos cours, en mieux.</h1>
+        <p>Transformez vos cours en résumés clairs et en quiz interactifs pour apprendre plus efficacement.</p>
+    </section>
 
-    <!-- Carte Principale avec le design moderne (Glassmorphism) -->
-    <div class="card-moderne slide-in p-5">
+    <section class="card-moderne">
+        <div class="card-heading">
+            <h2>Créez votre fiche de révision</h2>
+            <p>Ajoutez votre cours, choisissez un niveau, et on s’occupe du reste.</p>
+        </div>
         <form action="/generate" method="POST" enctype="multipart/form-data">
-            
             <div class="mb-4">
-                <label for="text_input" class="form-label fw-bold">📝 Copier-coller le texte du cours :</label>
-                <textarea class="form-control bg-light border-0 shadow-sm" id="text_input" name="text_input" rows="6" placeholder="Saisissez ou collez votre cours ici..." style="border-radius: 15px; resize: none;"></textarea>
+                <label for="text_input" class="form-label">Collez le texte de votre cours</label>
+                <textarea class="form-control" id="text_input" name="text_input" rows="6" placeholder="Copiez ou saisissez votre cours ici..."></textarea>
             </div>
 
             <div class="mb-4">
-                <label for="file_input" class="form-label fw-bold">📁 Ou importer un document (PDF, Word, TXT) :</label>
-                <input class="form-control bg-light border-0 shadow-sm" type="file" id="file_input" name="file_input" style="border-radius: 15px;">
+                <label for="file_input" class="form-label">Ou importez un document</label>
+                <input class="form-control" type="file" id="file_input" name="file_input" accept=".pdf,.docx,.txt">
+                <div class="form-text mt-2">Formats acceptés : PDF, Word (.docx) ou texte (.txt).</div>
             </div>
 
-            <div class="mb-5">
-                <label for="difficulty" class="form-label fw-bold">📊 Niveau de difficulté (pour le Quiz) :</label>
-                <select class="form-select bg-light border-0 shadow-sm" id="difficulty" name="difficulty" style="border-radius: 15px;">
-                    <option value="Facile">Facile (Notions de base)</option>
-                    <option value="Moyen" selected>Moyen (Intermédiaire)</option>
-                    <option value="Difficile">Difficile (Expert / Approfondi)</option>
+            <div class="mb-4">
+                <label for="difficulty" class="form-label">Niveau du quiz</label>
+                <select class="form-select" id="difficulty" name="difficulty">
+                    <option value="Facile">Facile — notions de base</option>
+                    <option value="Moyen" selected>Moyen — intermédiaire</option>
+                    <option value="Difficile">Difficile — approfondi</option>
                 </select>
             </div>
 
-            <!-- Boutons d'action -->
             <div class="d-grid gap-3 mt-4">
-                <button type="submit" name="action" value="both" class="btn btn-custom btn-lg fw-bold py-3 shadow">
-                    Générer Résumé & Quiz
+                <button type="submit" name="action" value="both" class="btn btn-custom btn-lg py-3">
+                    <i class="bi bi-stars me-2"></i>Générer résumé et quiz
                 </button>
-                
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <button type="submit" name="action" value="resume" class="btn btn-success btn-lg w-100 fw-bold py-3 shadow-sm" style="border-radius: 50px;">
-                            Générer un Résumé
+                        <button type="submit" name="action" value="resume" class="btn btn-outline-custom btn-lg w-100 py-3">
+                            <i class="bi bi-journal-text me-2"></i>Résumé uniquement
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <button type="submit" name="action" value="quiz" class="btn btn-info btn-lg text-white w-100 fw-bold py-3 shadow-sm" style="border-radius: 50px;">
-                            Générer un Quiz
+                        <button type="submit" name="action" value="quiz" class="btn btn-outline-custom btn-lg w-100 py-3">
+                            <i class="bi bi-patch-question me-2"></i>Quiz uniquement
                         </button>
                     </div>
                 </div>
             </div>
-
         </form>
-    </div>
-</div>
+    </section>
+</main>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

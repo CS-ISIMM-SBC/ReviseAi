@@ -3,41 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ton Résumé & Quiz</title>
+    <title>Votre résumé et quiz - ReviseAI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
-<div class="container py-5" style="max-width: 900px;">
-    
-    <div class="mb-4">
-        <a href="/" class="btn btn-light rounded-pill shadow-sm">⬅ Retour</a>
+<nav class="navbar app-navbar">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/">
+            <span class="brand-icon"><i class="bi bi-stars"></i></span>
+            <span>Revise<span class="text-primary">AI</span></span>
+        </a>
     </div>
+</nav>
 
-    <!-- ZONE À EXPORTER EN PDF -->
+<main class="container page-shell result-shell">
+    <a href="/" class="btn btn-outline-custom mb-3"><i class="bi bi-arrow-left me-2"></i>Retour aux cours</a>
+    <header class="result-heading">
+        <h1>Votre support de révision est prêt</h1>
+        <p>Parcourez votre résumé ou testez vos connaissances avec le quiz.</p>
+    </header>
+
     <div id="zone-a-exporter">
-        
-        <!-- Section Résumé (Affichée seulement si l'action le demande) -->
         {% if data.resume and action in ['both', 'resume'] %}
-        <div class="card-moderne mb-5">
-            <h2 class="h4 mb-4 border-bottom pb-2">📝 Résumé du cours</h2>
-            <!-- L'ajout de | safe permet d'interpréter les balises HTML de l'IA (h3, ul, etc.) -->
-            <div class="contenu-resume" style="line-height: 1.8;">
+        <section class="card-moderne result-card mb-4">
+            <h2 class="mb-4"><i class="bi bi-journal-text me-2"></i>Résumé du cours</h2>
+            <div class="contenu-resume">
                 {{ data.resume | safe }}
             </div>
-        </div>
+        </section>
         {% endif %}
 
-        <!-- Section Quiz -->
         {% if data.quiz and action in ['both', 'quiz'] %}
-        <div class="card-moderne" style="animation-delay: 0.2s;">
-            <h2 class="h4 mb-4 border-bottom pb-2">🎯 Quiz d'entraînement</h2>
+        <section class="card-moderne result-card">
+            <h2 class="mb-4"><i class="bi bi-patch-question me-2"></i>Quiz d'entraînement</h2>
             
             <form id="quiz-form">
                 {% for q in data.quiz %}
-                <!-- 1. ON SAUVEGARDE LE NUMÉRO DE LA QUESTION ICI -->
                 {% set q_index = loop.index %}
                 
                 <div class="question-block mb-4">
@@ -45,8 +50,7 @@
                     
                     <div class="options-container">
                         {% for option in q.options %}
-                            <label class="option-quiz w-100" data-correct="{{ 'true' if option == q.reponse_correcte else 'false' }}">
-                                <!-- 2. ON UTILISE q_index POUR QUE CHAQUE QUESTION SOIT INDÉPENDANTE -->
+                            <label class="option-quiz" data-correct="{{ 'true' if option == q.reponse_correcte else 'false' }}">
                                 <input type="radio" name="question_{{ q_index }}" value="{{ option }}" class="me-3">
                                 <span class="option-texte">{{ option }}</span>
                             </label>
@@ -56,23 +60,20 @@
                 {% endfor %}
                 
                 <div class="text-center mt-5" id="bouton-valider-container">
-                    <button type="submit" class="btn btn-custom btn-lg">Valider mes réponses ✅</button>
+                    <button type="submit" class="btn btn-custom btn-lg px-4 py-3">Valider mes réponses</button>
                 </div>
             </form>
 
-
-            <!-- Zone de résultat (Affichée par le JS) -->
             <div id="quiz-result" class="text-center mt-5" style="display: none;">
                 <h3 class="mb-3 fw-bold">Score : <span id="score-display" class="text-primary"></span></h3>
-                <!-- Le bouton PDF est dans la zone à exporter, mais on peut le cacher pendant l'export si on veut -->
-                <button onclick="exporterPDF()" class="btn btn-custom" id="btn-export">📄 Télécharger en PDF (Corrigé)</button>
+                <button onclick="exporterPDF()" class="btn btn-custom px-4 py-2" id="btn-export"><i class="bi bi-file-earmark-pdf me-2"></i>Télécharger le corrigé en PDF</button>
+                <p id="score-save-status" class="small text-muted mt-3 mb-0" role="status"></p>
             </div>
-        </div>
+        </section>
         {% endif %}
 
     </div>
-    <!-- FIN DE LA ZONE À EXPORTER -->
-</div>
+</main>
 
 <script>
 // Gestion de la correction du Quiz
@@ -111,6 +112,25 @@ if (quizForm) {
         document.getElementById('bouton-valider-container').style.display = 'none';
         document.getElementById('score-display').innerText = `${score} / ${totalQuestions}`;
         document.getElementById('quiz-result').style.display = 'block';
+        fetch('{{ url_for("save_score") }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                quiz_id: {{ quiz_id }},
+                score: score,
+                total_questions: totalQuestions
+            })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Score non enregistré');
+                return response.json();
+            })
+            .then(() => {
+                document.getElementById('score-save-status').innerText = 'Score enregistré.';
+            })
+            .catch(() => {
+                document.getElementById('score-save-status').innerText = 'Score affiché, mais non enregistré.';
+            });
     });
 }
 

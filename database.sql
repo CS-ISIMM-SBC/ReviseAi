@@ -9,6 +9,6 @@ CREATE TABLE IF NOT EXISTS quiz_history (
     difficulty VARCHAR(50) NOT NULL,   -- Facile, Moyen, Difficile
     summary TEXT NOT NULL,             -- Le résumé généré par l'IA
     score INT DEFAULT 0,               -- Le score obtenu par l'étudiant
-    total_questions INT DEFAULT 5,     -- Nombre total de questions
+    total_questions INT DEFAULT 10,    -- Nombre total de questions
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,6 +1,7 @@
 flask
+openai
+python-dotenv
+bleach
 mysql-connector-python
-google-generativeai
 pypdf
 python-docx
-Pillow
